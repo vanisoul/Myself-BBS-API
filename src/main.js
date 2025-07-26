@@ -4,8 +4,12 @@ import { BASE } from "./constants";
 import { getAiringList, getCompletedList } from "./list";
 import { response } from "./response";
 import { search } from "./search";
+import { integrateCms10Routes } from "./cms10/routes.js";
 
 const router = Router();
+
+// 整合 CMS10 路由
+integrateCms10Routes(router);
 
 // list
 router.get("/list", async (request) => {

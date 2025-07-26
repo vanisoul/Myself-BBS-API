@@ -10,8 +10,14 @@
         "login": "wrangler login",
         "build": "esbuild src/main.js --bundle --minify --format=esm --outfile=dist/worker.js",
         "dev": "wrangler dev",
+        "dev:local": "node --experimental-modules src/local-server.js",
         "publish": "wrangler publish",
         "test": "node --experimental-vm-modules node_modules/.bin/jest --config=jest.config.mjs",
+        "test:cms10": "node --experimental-vm-modules node_modules/.bin/jest --config=src/cms10/tests/jest.config.js",
+        "test:cms10:watch": "npm run test:cms10 -- --watch",
+        "test:cms10:coverage": "npm run test:cms10 -- --coverage",
+        "test:api": "node test-cms10-api.js",
+        "test:all": "npm run test:cms10 && npm run test:api",
         "crawl": "node crawler/index.mjs"
     },
     "dependencies": {
