@@ -57,7 +57,7 @@ function convertTimestamp(timestamp) {
     timestamp = Date.now();
   }
 
-  const date = new Date(timestamp);
+  let date = new Date(timestamp);
 
   // 確保日期有效
   if (isNaN(date.getTime())) {
