@@ -21,8 +21,8 @@ export const EPISODE_FORMATS = {
  * 格式檢測規則
  */
 const FORMAT_PATTERNS = {
-  // play/數字/數字 格式
-  PLAY_PATH: /^play\/\d+\/\d+$/,
+  // play/數字/數字/_/v 格式
+  PLAY_PATH: /^play\/\d+\/[A-Za-z0-9_-]+$/,
   // Base64 類似的編碼格式 (字母、數字、- 和 _)
   ENCODED_ID: /^[A-Za-z0-9_-]+$/
 };

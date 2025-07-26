@@ -72,7 +72,7 @@ export function generatePlayPathUrl(playPath, options = {}) {
   const pathPart = trimmedPath.substring(5); // 移除 "play/"
 
   // 驗證路徑格式 (應該是 數字/數字)
-  if (!/^\d+\/\d+$/.test(pathPart)) {
+  if (!/^\d+\/[A-Za-z0-9_-]+$/.test(pathPart)) {
     throw new Error(`無效的 play path 格式: ${trimmedPath}，應該為 play/數字/數字`);
   }
 

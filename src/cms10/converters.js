@@ -361,7 +361,7 @@ function detectSingleEpisodeFormat(episodeValue) {
   const trimmedValue = episodeValue.trim();
 
   // 檢測 play_path 格式
-  if (/^play\/\d+\/\d+$/.test(trimmedValue)) {
+  if (/^play\/\d+\/[A-Za-z0-9_-]+$/.test(trimmedValue)) {
     return EPISODE_FORMATS.PLAY_PATH;
   }
 
