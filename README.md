@@ -1,18 +1,23 @@
 # Myself-BBS API
- myself-bbs.com JSON API
+
+myself-bbs.com JSON API
 
 # Endpoints
+
 ```bash
 https://myself-bbs.jacob.workers.dev/
 ```
 
 ## List
+
 ### 連載列表
+
 ```bash
 https://myself-bbs.jacob.workers.dev/list/airing
 ```
 
 Response Example
+
 ```javascript
 {
   "data": {
@@ -36,11 +41,13 @@ Response Example
 ```
 
 ### 完結列表
+
 ```bash
 https://myself-bbs.jacob.workers.dev/list/completed
 ```
 
 Response Example
+
 ```javascript
 {
   "data": {
@@ -64,11 +71,15 @@ Response Example
 ```
 
 ## Anime
+
 ### 特定動畫資訊
+
 ```bash
 https://myself-bbs.jacob.workers.dev/anime/${id}
 ```
+
 Response Example
+
 ```javascript
 {
   "data": {
@@ -98,13 +109,14 @@ Response Example
 }
 ```
 
-
 ### 全部動畫資訊
+
 ```bash
 https://myself-bbs.jacob.workers.dev/anime/all
 ```
 
 Response Example
+
 ```javascript
 {
   "data": {
@@ -163,11 +175,13 @@ Response Example
 ```
 
 ## Search
+
 ```bash
 https://myself-bbs.jacob.workers.dev/search/${query}
 ```
 
 Response Example
+
 ```javascript
 {
   "data": {
@@ -190,18 +204,43 @@ Response Example
 }
 ```
 
+## 關於 ac detail 的 ids vod_play_url 處理方式改為以下
 
-## M3U8
-來源於 /anime/all 邏輯的回應 episodes 解析
+來源於 /anime/{id} 邏輯的回應 episodes 解析
 所以需要支援傳入 特定 id 找出那個影片所有 episodes
 轉換為 m3u8 連結
+
 ```bash
 https://vpx05.myself-bbs.com/hls/sA/0A/Aj/AgADsA0AAjef-VU/index.m3u8
 https://vpx05.myself-bbs.com/hls/fA/wA/Aq/AgADfAwAAqLbQVY/index.m3u8
 ```
 
+分為兩種模式
+episodes 內容為
+"episodes": {
+"第 01 話 海的那邊": "play/46442/001",
+"第 02 話 暗夜列車": "play/46442/002",
+"第 03 話 希望之門": "play/46442/003",
+"第 04 話 手手相傳": "play/46442/004",
+.....
+}
+需要組成
+https://vpx05.myself-bbs.com/vpx/46442/003/720p.m3u8
+
+或者
+
+episodes 內容為
+"episodes": {
+"第 01 話": "AgADMg4AAvWkAVc"
+......
+}
+需要組成
+https://vpx05.myself-bbs.com/hls/Mg/4A/Av/AgADMg4AAvWkAVc/index.m3u8
+
 # Optional Query String
+
 minify output json:
+
 ```
 ?min=1
 ```

@@ -51,6 +51,9 @@ export {
 export {
   convertListResponse,
   convertDetailResponse,
+  convertDetailResponseEnhanced,
+  convertDetailResponseLegacy,
+  convertDetailResponseSmart,
   extractDataItems,
   mergeDataSources,
   processSearchRequest,
@@ -122,12 +125,19 @@ export {
 } from './routes.js';
 
 /**
- * CMS10 模組版本資訊
+ * CMS10 模組版本資訊 (第二階段更新)
  */
 export const CMS10_VERSION = {
-  version: '1.0.0',
+  version: '2.0.0',
   buildDate: '2025-07-26',
-  description: 'Myself-BBS to CMS10 Conversion Module'
+  description: 'Myself-BBS to CMS10 Conversion Module with Enhanced vod_play_url Support',
+  features: {
+    enhanced_play_url: true,
+    episode_format_detection: true,
+    multiple_video_qualities: true,
+    fallback_support: true,
+    url_validation: true
+  }
 };
 
 /**
