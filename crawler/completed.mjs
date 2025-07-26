@@ -13,7 +13,7 @@ export async function get_completed_list() {
 
     let next_url = get_next(dom);
     let page = 1;
-    while (next_url && page++ < 100) {
+    while (next_url && page++ < 200) {
         console.log(`Crawling Completed List Page ${page}`);
         const raw_html = await fetch(next_url).then((res) => res.text());
         dom.window.document.write(raw_html);
