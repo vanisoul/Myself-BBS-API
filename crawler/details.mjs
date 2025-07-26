@@ -29,7 +29,15 @@ export async function get_details(link) {
     const website = info[4].textContent.substr(5).trim();
     const description = info_box.querySelector("#info_introduction > p").textContent.trim();
     const image = document.querySelector(".info_img_box > img").src;
-    const episodes = [...document.querySelectorAll(".main_list > li")].reduce((obj, node) => {
+
+    // 時間 如果比 2017/07/03 早要標記特殊模式
+    let specialMode = false;
+    const premiereDate = new Date(`${premiere[0]}-${premiere[1]}-${premiere[2]}`);
+    if (premiereDate < new Date("2017-07-03")) {
+        specialMode = true;
+    }
+
+    const baseEpisodes = [...document.querySelectorAll(".main_list > li")].reduce((obj, node) => {
         try {
             const name = node.querySelector("a").textContent.trim();
             const code = node
@@ -42,6 +50,14 @@ export async function get_details(link) {
         }
         return obj;
     }, {});
+
+    // baseEpisodes 是 play 開頭 ,且是 特殊模式的話, 需要轉換成 episodes
+    const episodes = Object.fromEntries(Object.entries(baseEpisodes).map(([name, code]) => {
+        if (specialMode && code.startsWith("play")) {
+            return [name, `${code}_v01`];
+        }
+        return [name, code];
+    }));
 
     return { id, title, category, premiere, ep, author, website, description, image, episodes };
 }
