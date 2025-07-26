@@ -17,8 +17,8 @@ const ValidationRules = {
   ac: {
     required: true,
     type: 'string',
-    enum: ['list', 'detail'],
-    message: 'ac 參數必須為 list 或 detail'
+    enum: ['videolist', 'detail'],
+    message: 'ac 參數必須為 videolist 或 detail'
   },
 
   ids: {

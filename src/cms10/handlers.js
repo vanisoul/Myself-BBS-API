@@ -214,7 +214,7 @@ async function handleCms10Request(query) {
 
     // 根據操作類型路由
     switch (query.ac) {
-      case 'list':
+      case 'videolist':
         return await handleCms10List(query);
 
       case 'detail':
@@ -280,10 +280,10 @@ async function getCms10Info() {
       buildDate: CMS10_VERSION.buildDate,
       description: CMS10_VERSION.description,
       endpoints: {
-        list: "/api.php/provide/vod/?ac=list",
+        list: "/api.php/provide/vod/?ac=videolist",
         detail: "/api.php/provide/vod/?ac=detail&ids={ids}",
-        search: "/api.php/provide/vod/?ac=list&wd={keyword}",
-        category: "/api.php/provide/vod/?ac=list&t={type_id}"
+        search: "/api.php/provide/vod/?ac=videolist&wd={keyword}",
+        category: "/api.php/provide/vod/?ac=videolist&t={type_id}"
       },
       parameters: {
         ac: "操作類型 (list|detail)",

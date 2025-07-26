@@ -131,10 +131,10 @@ server.listen(PORT, HOST, () => {
   console.log(`   GET  http://${HOST}:${PORT}/search/進擊的巨人`);
   console.log('');
   console.log('🆕 CMS10 API 端點:');
-  console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=list`);
-  console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=list&pg=1&limit=20`);
-  console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=list&t=1`);
-  console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=list&wd=巨人`);
+  console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=videolist`);
+  console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=videolist&pg=1&limit=20`);
+  console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=videolist&t=1`);
+  console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=videolist&wd=巨人`);
   console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=detail&ids=49401,46442,44473`);
   console.log('');
   console.log('🔧 擴展功能端點:');

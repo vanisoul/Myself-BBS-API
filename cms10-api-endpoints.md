@@ -1,6 +1,7 @@
 # CMS10 相容 API 端點結構規劃
 
 ## 規格異動日期時間
+
 **建立日期**: 2025-07-26 15:28:00 (UTC+8)
 **版本**: v1.0
 
@@ -12,11 +13,11 @@
 基礎路徑: /api.php/provide/vod/
 ```
 
-| 端點 | 功能 | CMS10 標準 | 對應原始端點 |
-|------|------|------------|-------------|
-| `?ac=list` | 獲取視頻列表 | ✅ | `/list/airing`, `/list/completed` |
-| `?ac=detail` | 獲取視頻詳情 | ✅ | `/anime/{id}`, `/anime/all` |
-| `?ac=list&wd={query}` | 搜尋視頻 | ✅ | `/search/{query}` |
+| 端點                       | 功能         | CMS10 標準 | 對應原始端點                      |
+| -------------------------- | ------------ | ---------- | --------------------------------- |
+| `?ac=videolist`            | 獲取視頻列表 | ✅         | `/list/airing`, `/list/completed` |
+| `?ac=detail`               | 獲取視頻詳情 | ✅         | `/anime/{id}`, `/anime/all`       |
+| `?ac=videolist&wd={query}` | 搜尋視頻     | ✅         | `/search/{query}`                 |
 
 ### 1.2 保留原有端點
 
@@ -35,19 +36,19 @@
 
 ### 2.1 視頻列表端點
 
-**路徑**: `/api.php/provide/vod/?ac=list`
+**路徑**: `/api.php/provide/vod/?ac=videolist`
 
 #### 2.1.1 支援參數
 
-| 參數 | 類型 | 必填 | 預設值 | 說明 | 實作邏輯 |
-|------|------|------|--------|------|----------|
-| `ac` | string | ✅ | - | 固定為 `list` | 路由識別 |
-| `t` | number | ❌ | - | 分類 ID 篩選 | 根據分類映射表篩選 |
-| `pg` | number | ❌ | 1 | 頁碼 | 分頁邏輯實作 |
-| `wd` | string | ❌ | - | 搜尋關鍵字 | 整合 Fuse.js 搜尋 |
-| `h` | number | ❌ | - | X 小時內更新 | 根據時間戳篩選 |
-| `at` | string | ❌ | json | 資料格式 | 固定 JSON |
-| `ids` | string | ❌ | - | 指定 ID 列表 | 批量查詢邏輯 |
+| 參數  | 類型   | 必填 | 預設值 | 說明          | 實作邏輯           |
+| ----- | ------ | ---- | ------ | ------------- | ------------------ |
+| `ac`  | string | ✅   | -      | 固定為 `list` | 路由識別           |
+| `t`   | number | ❌   | -      | 分類 ID 篩選  | 根據分類映射表篩選 |
+| `pg`  | number | ❌   | 1      | 頁碼          | 分頁邏輯實作       |
+| `wd`  | string | ❌   | -      | 搜尋關鍵字    | 整合 Fuse.js 搜尋  |
+| `h`   | number | ❌   | -      | X 小時內更新  | 根據時間戳篩選     |
+| `at`  | string | ❌   | json   | 資料格式      | 固定 JSON          |
+| `ids` | string | ❌   | -      | 指定 ID 列表  | 批量查詢邏輯       |
 
 #### 2.1.2 實作邏輯
 
@@ -58,26 +59,17 @@
  * @returns {Object} CMS10 格式回應
  */
 async function handleCms10List(query) {
-  const {
-    t: typeId,
-    pg: page = 1,
-    wd: keyword,
-    h: hours,
-    ids: idList
-  } = query;
+  const { t: typeId, pg: page = 1, wd: keyword, h: hours, ids: idList } = query;
 
   let data;
 
   // 1. 獲取基礎資料
   if (idList) {
     // 批量查詢指定 ID
-    data = await getBatchAnimeData(idList.split(','));
+    data = await getBatchAnimeData(idList.split(","));
   } else {
     // 獲取全部列表資料
-    const [airing, completed] = await Promise.all([
-      getAiringList(),
-      getCompletedList()
-    ]);
+    const [airing, completed] = await Promise.all([getAiringList(), getCompletedList()]);
     data = [...airing.data, ...completed.data];
   }
 
@@ -111,7 +103,7 @@ async function handleCms10List(query) {
     pagecount,
     limit: limit.toString(),
     total,
-    list: cms10List
+    list: cms10List,
   };
 }
 ```
@@ -122,12 +114,12 @@ async function handleCms10List(query) {
 
 #### 2.2.1 支援參數
 
-| 參數 | 類型 | 必填 | 預設值 | 說明 | 實作邏輯 |
-|------|------|------|--------|------|----------|
-| `ac` | string | ✅ | - | 固定為 `detail` | 路由識別 |
-| `ids` | string | ✅ | - | 視頻 ID 列表 | 支援單個或多個 ID |
-| `h` | number | ❌ | - | X 小時內更新 | 時間篩選 |
-| `at` | string | ❌ | json | 資料格式 | 固定 JSON |
+| 參數  | 類型   | 必填 | 預設值 | 說明            | 實作邏輯          |
+| ----- | ------ | ---- | ------ | --------------- | ----------------- |
+| `ac`  | string | ✅   | -      | 固定為 `detail` | 路由識別          |
+| `ids` | string | ✅   | -      | 視頻 ID 列表    | 支援單個或多個 ID |
+| `h`   | number | ❌   | -      | X 小時內更新    | 時間篩選          |
+| `at`  | string | ❌   | json   | 資料格式        | 固定 JSON         |
 
 #### 2.2.2 實作邏輯
 
@@ -148,17 +140,17 @@ async function handleCms10Detail(query) {
       pagecount: 0,
       limit: "20",
       total: 0,
-      list: []
+      list: [],
     };
   }
 
   // 1. 獲取詳情資料
-  const ids = idList.split(',');
-  const detailPromises = ids.map(id => getAnime(id));
+  const ids = idList.split(",");
+  const detailPromises = ids.map((id) => getAnime(id));
   const details = await Promise.all(detailPromises);
 
   // 2. 過濾有效資料
-  const validDetails = details.filter(detail => detail !== null);
+  const validDetails = details.filter((detail) => detail !== null);
 
   // 3. 時間篩選
   let filteredDetails = validDetails;
@@ -176,7 +168,7 @@ async function handleCms10Detail(query) {
     pagecount: 1,
     limit: "20",
     total: cms10Details.length,
-    list: cms10Details
+    list: cms10Details,
   };
 }
 ```
@@ -193,48 +185,48 @@ router.get("/api.php/provide/vod/", async (request) => {
 
   try {
     switch (ac) {
-      case 'list':
+      case "list":
         return response({
-          data: JSON.stringify(
-            await handleCms10List(query),
-            null,
-            query.min ? 0 : 2
-          )
+          data: JSON.stringify(await handleCms10List(query), null, query.min ? 0 : 2),
         });
 
-      case 'detail':
+      case "detail":
         return response({
-          data: JSON.stringify(
-            await handleCms10Detail(query),
-            null,
-            query.min ? 0 : 2
-          )
+          data: JSON.stringify(await handleCms10Detail(query), null, query.min ? 0 : 2),
         });
 
       default:
         return response({
-          data: JSON.stringify({
-            code: -1,
-            msg: "參數錯誤：不支援的操作類型",
-            page: 1,
-            pagecount: 0,
-            limit: "20",
-            total: 0,
-            list: []
-          }, null, 2)
+          data: JSON.stringify(
+            {
+              code: -1,
+              msg: "參數錯誤：不支援的操作類型",
+              page: 1,
+              pagecount: 0,
+              limit: "20",
+              total: 0,
+              list: [],
+            },
+            null,
+            2,
+          ),
         });
     }
   } catch (error) {
     return response({
-      data: JSON.stringify({
-        code: 0,
-        msg: `請求失敗：${error.message}`,
-        page: 1,
-        pagecount: 0,
-        limit: "20",
-        total: 0,
-        list: []
-      }, null, 2)
+      data: JSON.stringify(
+        {
+          code: 0,
+          msg: `請求失敗：${error.message}`,
+          page: 1,
+          pagecount: 0,
+          limit: "20",
+          total: 0,
+          list: [],
+        },
+        null,
+        2,
+      ),
     });
   }
 });
@@ -283,8 +275,8 @@ function paginateData(data, page = 1, limit = 20) {
       page: parseInt(page),
       pagecount,
       limit: limit.toString(),
-      total
-    }
+      total,
+    },
   };
 }
 ```
@@ -309,7 +301,7 @@ function getCachedPage(cacheKey) {
 function setCachedPage(cacheKey, data) {
   pageCache.set(cacheKey, {
     data,
-    timestamp: Date.now()
+    timestamp: Date.now(),
   });
 }
 ```
@@ -326,7 +318,7 @@ function setCachedPage(cacheKey, data) {
  * @returns {Array} 篩選後資料
  */
 function filterByCategory(data, typeId) {
-  return data.filter(item => {
+  return data.filter((item) => {
     const categoryMapping = getCategoryMapping(item.category);
     return categoryMapping.type_id === parseInt(typeId);
   });
@@ -343,9 +335,9 @@ function filterByCategory(data, typeId) {
  * @returns {Array} 篩選後資料
  */
 function filterByUpdateTime(data, hours) {
-  const cutoffTime = Date.now() - (hours * 60 * 60 * 1000);
+  const cutoffTime = Date.now() - hours * 60 * 60 * 1000;
 
-  return data.filter(item => {
+  return data.filter((item) => {
     const updateTime = item.time || item.meta?.time || Date.now();
     return updateTime >= cutoffTime;
   });
@@ -365,11 +357,11 @@ function searchByKeyword(data, keyword) {
   const fuse = new Fuse(data, {
     includeScore: true,
     keys: ["title", "description", "author"],
-    threshold: 0.3
+    threshold: 0.3,
   });
 
   const results = fuse.search(keyword);
-  return results.map(result => result.item);
+  return results.map((result) => result.item);
 }
 ```
 
@@ -395,7 +387,7 @@ async function getBatchAnimeData(ids) {
   });
 
   const results = await Promise.all(promises);
-  return results.filter(result => result !== null);
+  return results.filter((result) => result !== null);
 }
 ```
 
@@ -418,7 +410,7 @@ function createErrorResponse(code, message) {
     pagecount: 0,
     limit: "20",
     total: 0,
-    list: []
+    list: [],
   };
 }
 ```
@@ -460,15 +452,12 @@ async function getPreprocessedData() {
   const now = Date.now();
 
   if (!preprocessedData || now - lastPreprocessTime > PREPROCESS_INTERVAL) {
-    const [airing, completed] = await Promise.all([
-      getAiringList(),
-      getCompletedList()
-    ]);
+    const [airing, completed] = await Promise.all([getAiringList(), getCompletedList()]);
 
     preprocessedData = {
       all: [...airing.data, ...completed.data],
       byCategory: groupByCategory([...airing.data, ...completed.data]),
-      searchIndex: createSearchIndex([...airing.data, ...completed.data])
+      searchIndex: createSearchIndex([...airing.data, ...completed.data]),
     };
 
     lastPreprocessTime = now;
@@ -485,9 +474,9 @@ async function getPreprocessedData() {
  * 多層快取策略
  */
 const cacheConfig = {
-  list: { ttl: 300000, maxSize: 100 },      // 列表快取 5 分鐘
-  detail: { ttl: 600000, maxSize: 1000 },   // 詳情快取 10 分鐘
-  search: { ttl: 180000, maxSize: 50 }      // 搜尋快取 3 分鐘
+  list: { ttl: 300000, maxSize: 100 }, // 列表快取 5 分鐘
+  detail: { ttl: 600000, maxSize: 1000 }, // 詳情快取 10 分鐘
+  search: { ttl: 180000, maxSize: 50 }, // 搜尋快取 3 分鐘
 };
 ```
 
@@ -497,16 +486,16 @@ const cacheConfig = {
 
 ```bash
 # 列表測試
-GET /api.php/provide/vod/?ac=list
-GET /api.php/provide/vod/?ac=list&pg=2
-GET /api.php/provide/vod/?ac=list&t=1
+GET /api.php/provide/vod/?ac=videolist
+GET /api.php/provide/vod/?ac=videolist&pg=2
+GET /api.php/provide/vod/?ac=videolist&t=1
 
 # 詳情測試
 GET /api.php/provide/vod/?ac=detail&ids=12345
 GET /api.php/provide/vod/?ac=detail&ids=12345,67890
 
 # 搜尋測試
-GET /api.php/provide/vod/?ac=list&wd=進擊
+GET /api.php/provide/vod/?ac=videolist&wd=進擊
 ```
 
 ### 9.2 邊界條件測試
@@ -515,10 +504,10 @@ GET /api.php/provide/vod/?ac=list&wd=進擊
 # 錯誤參數測試
 GET /api.php/provide/vod/?ac=invalid
 GET /api.php/provide/vod/?ac=detail
-GET /api.php/provide/vod/?ac=list&pg=999999
+GET /api.php/provide/vod/?ac=videolist&pg=999999
 
 # 空資料測試
-GET /api.php/provide/vod/?ac=list&wd=不存在的關鍵字
+GET /api.php/provide/vod/?ac=videolist&wd=不存在的關鍵字
 GET /api.php/provide/vod/?ac=detail&ids=999999
 ```
 
@@ -531,7 +520,7 @@ const config = {
   CMS10_ENABLED: true,
   DEFAULT_PAGE_SIZE: 20,
   MAX_PAGE_SIZE: 100,
-  CACHE_TTL: 300000
+  CACHE_TTL: 300000,
 };
 ```
 

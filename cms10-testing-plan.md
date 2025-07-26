@@ -1,6 +1,7 @@
 # CMS10 測試計劃和驗證方式
 
 ## 規格異動日期時間
+
 **建立日期**: 2025-07-26 15:36:00 (UTC+8)
 **版本**: v1.0
 
@@ -16,14 +17,14 @@
 
 ### 1.2 測試範圍
 
-| 測試類型 | 覆蓋範圍 | 優先級 |
-|----------|----------|--------|
-| 單元測試 | 資料轉換函式、驗證邏輯 | 高 |
-| 整合測試 | API 端點、資料流程 | 高 |
-| 相容性測試 | CMS10 標準符合性 | 高 |
-| 效能測試 | 回應時間、併發處理 | 中 |
-| 錯誤測試 | 異常情況處理 | 中 |
-| 回歸測試 | 原有功能保持 | 高 |
+| 測試類型   | 覆蓋範圍               | 優先級 |
+| ---------- | ---------------------- | ------ |
+| 單元測試   | 資料轉換函式、驗證邏輯 | 高     |
+| 整合測試   | API 端點、資料流程     | 高     |
+| 相容性測試 | CMS10 標準符合性       | 高     |
+| 效能測試   | 回應時間、併發處理     | 中     |
+| 錯誤測試   | 異常情況處理           | 中     |
+| 回歸測試   | 原有功能保持           | 高     |
 
 ## 2. 單元測試計劃
 
@@ -33,16 +34,16 @@
 /**
  * 測試資料轉換函式
  */
-describe('CMS10 資料轉換', () => {
-  describe('convertListItem', () => {
-    test('應該正確轉換基本列表項目', () => {
+describe("CMS10 資料轉換", () => {
+  describe("convertListItem", () => {
+    test("應該正確轉換基本列表項目", () => {
       const input = {
         id: 12345,
         title: "進擊的巨人",
         category: ["動作", "劇情"],
         ep: 25,
         image: "https://example.com/cover.jpg",
-        time: 1630391759999
+        time: 1630391759999,
       };
 
       const expected = {
@@ -54,17 +55,17 @@ describe('CMS10 資料轉換', () => {
         vod_time: "2021-08-31 07:35:59",
         vod_remarks: "第25集",
         vod_play_from: "myself-bbs",
-        vod_pic: "https://example.com/cover.jpg"
+        vod_pic: "https://example.com/cover.jpg",
       };
 
       const result = convertListItem(input);
       expect(result).toEqual(expected);
     });
 
-    test('應該處理缺失欄位', () => {
+    test("應該處理缺失欄位", () => {
       const input = {
         id: 123,
-        title: "測試動畫"
+        title: "測試動畫",
       };
 
       const result = convertListItem(input);
@@ -76,8 +77,8 @@ describe('CMS10 資料轉換', () => {
     });
   });
 
-  describe('convertDetailItem', () => {
-    test('應該正確轉換詳情項目', () => {
+  describe("convertDetailItem", () => {
+    test("應該正確轉換詳情項目", () => {
       const input = {
         id: 12345,
         title: "進擊的巨人",
@@ -87,8 +88,8 @@ describe('CMS10 資料轉換', () => {
         premiere: [2013, 4, 7],
         episodes: {
           "第 01 話": ["12345", "001"],
-          "第 02 話": ["12345", "002"]
-        }
+          "第 02 話": ["12345", "002"],
+        },
       };
 
       const result = convertDetailItem(input);
@@ -106,12 +107,12 @@ describe('CMS10 資料轉換', () => {
 ### 2.2 分類映射測試
 
 ```javascript
-describe('分類映射', () => {
-  test('應該正確映射已知分類', () => {
+describe("分類映射", () => {
+  test("應該正確映射已知分類", () => {
     const testCases = [
       { input: ["動作"], expected: { type_id: 1, type_name: "動作" } },
       { input: ["科幻"], expected: { type_id: 3, type_name: "科幻" } },
-      { input: ["戀愛"], expected: { type_id: 6, type_name: "戀愛" } }
+      { input: ["戀愛"], expected: { type_id: 6, type_name: "戀愛" } },
     ];
 
     testCases.forEach(({ input, expected }) => {
@@ -120,12 +121,12 @@ describe('分類映射', () => {
     });
   });
 
-  test('應該處理未知分類', () => {
+  test("應該處理未知分類", () => {
     const result = getCategoryMapping(["未知分類"]);
     expect(result).toEqual({ type_id: 99, type_name: "其他" });
   });
 
-  test('應該處理空分類', () => {
+  test("應該處理空分類", () => {
     const result = getCategoryMapping([]);
     expect(result).toEqual({ type_id: 99, type_name: "其他" });
   });
@@ -135,19 +136,19 @@ describe('分類映射', () => {
 ### 2.3 時間轉換測試
 
 ```javascript
-describe('時間轉換', () => {
-  test('應該正確轉換時間戳', () => {
+describe("時間轉換", () => {
+  test("應該正確轉換時間戳", () => {
     const timestamp = 1630391759999;
     const result = convertTimestamp(timestamp);
     expect(result).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
   });
 
-  test('應該處理無效時間戳', () => {
+  test("應該處理無效時間戳", () => {
     const result = convertTimestamp(null);
     expect(result).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
   });
 
-  test('應該正確轉換首播日期', () => {
+  test("應該正確轉換首播日期", () => {
     const premiere = [2013, 4, 7];
     const result = convertPremiereToYear(premiere);
     expect(result).toBe("2013");
@@ -160,65 +161,65 @@ describe('時間轉換', () => {
 ### 3.1 API 端點測試
 
 ```javascript
-describe('CMS10 API 端點', () => {
-  describe('GET /api.php/provide/vod/?ac=list', () => {
-    test('應該回傳正確的列表格式', async () => {
-      const response = await fetch('/api.php/provide/vod/?ac=list&pg=1');
+describe("CMS10 API 端點", () => {
+  describe("GET /api.php/provide/vod/?ac=videolist", () => {
+    test("應該回傳正確的列表格式", async () => {
+      const response = await fetch("/api.php/provide/vod/?ac=videolist&pg=1");
       const data = await response.json();
 
-      expect(data).toHaveProperty('code', 1);
-      expect(data).toHaveProperty('msg', '數據列表');
-      expect(data).toHaveProperty('page', 1);
-      expect(data).toHaveProperty('pagecount');
-      expect(data).toHaveProperty('limit', '20');
-      expect(data).toHaveProperty('total');
-      expect(data).toHaveProperty('list');
+      expect(data).toHaveProperty("code", 1);
+      expect(data).toHaveProperty("msg", "數據列表");
+      expect(data).toHaveProperty("page", 1);
+      expect(data).toHaveProperty("pagecount");
+      expect(data).toHaveProperty("limit", "20");
+      expect(data).toHaveProperty("total");
+      expect(data).toHaveProperty("list");
       expect(Array.isArray(data.list)).toBe(true);
     });
 
-    test('應該支援分頁參數', async () => {
-      const response = await fetch('/api.php/provide/vod/?ac=list&pg=2');
+    test("應該支援分頁參數", async () => {
+      const response = await fetch("/api.php/provide/vod/?ac=videolist&pg=2");
       const data = await response.json();
 
       expect(data.page).toBe(2);
     });
 
-    test('應該支援分類篩選', async () => {
-      const response = await fetch('/api.php/provide/vod/?ac=list&t=1');
+    test("應該支援分類篩選", async () => {
+      const response = await fetch("/api.php/provide/vod/?ac=videolist&t=1");
       const data = await response.json();
 
-      data.list.forEach(item => {
+      data.list.forEach((item) => {
         expect(item.type_id).toBe(1);
       });
     });
 
-    test('應該支援搜尋功能', async () => {
-      const response = await fetch('/api.php/provide/vod/?ac=list&wd=進擊');
+    test("應該支援搜尋功能", async () => {
+      const response = await fetch("/api.php/provide/vod/?ac=videolist&wd=進擊");
       const data = await response.json();
 
-      data.list.forEach(item => {
-        expect(item.vod_name).toContain('進擊');
+      data.list.forEach((item) => {
+        expect(item.vod_name).toContain("進擊");
       });
     });
   });
 
-  describe('GET /api.php/provide/vod/?ac=detail', () => {
-    test('應該回傳正確的詳情格式', async () => {
-      const response = await fetch('/api.php/provide/vod/?ac=detail&ids=12345');
+  describe("GET /api.php/provide/vod/?ac=detail", () => {
+    test("應該回傳正確的詳情格式", async () => {
+      const response = await fetch("/api.php/provide/vod/?ac=detail&ids=12345");
       const data = await response.json();
 
       expect(data.code).toBe(1);
       expect(data.list.length).toBeGreaterThan(0);
 
       const item = data.list[0];
-      expect(item).toHaveProperty('vod_id');
-      expect(item).toHaveProperty('vod_name');
-      expect(item).toHaveProperty('vod_content');
-      expect(item).toHaveProperty('vod_play_url');
+      expect(item).toHaveProperty("vod_id");
+      expect(item).toHaveProperty("vod_name");
+      expect(item).toHaveProperty("vod_content");
+      expect(item).toHaveProperty("vod_play_url");
     });
 
-    test('應該支援批量查詢', async () => {
-      const response = await fetch('/api.php/provide/vod/?ac=detail&ids=12345,67890');
+    test("應該支援批量查詢", async () => {
+      const response = await fetch("/api.php/provide/vod/?ac=detail&ids=12345,67890");
       const data = await response.json();
 
       expect(data.list.length).toBeLessThanOrEqual(2);
@@ -230,32 +231,32 @@ describe('CMS10 API 端點', () => {
 ### 3.2 錯誤處理測試
 
 ```javascript
-describe('錯誤處理', () => {
-  test('缺少 ac 參數應該回傳錯誤', async () => {
-    const response = await fetch('/api.php/provide/vod/');
+describe("錯誤處理", () => {
+  test("缺少 ac 參數應該回傳錯誤", async () => {
+    const response = await fetch("/api.php/provide/vod/");
     const data = await response.json();
 
     expect(data.code).toBe(-1);
-    expect(data.msg).toContain('參數錯誤');
+    expect(data.msg).toContain("參數錯誤");
   });
 
-  test('無效的 ac 參數應該回傳錯誤', async () => {
-    const response = await fetch('/api.php/provide/vod/?ac=invalid');
+  test("無效的 ac 參數應該回傳錯誤", async () => {
+    const response = await fetch("/api.php/provide/vod/?ac=invalid");
     const data = await response.json();
 
     expect(data.code).toBe(-1);
   });
 
-  test('detail 操作缺少 ids 應該回傳錯誤', async () => {
-    const response = await fetch('/api.php/provide/vod/?ac=detail');
+  test("detail 操作缺少 ids 應該回傳錯誤", async () => {
+    const response = await fetch("/api.php/provide/vod/?ac=detail");
     const data = await response.json();
 
     expect(data.code).toBe(-1);
-    expect(data.msg).toContain('ids');
+    expect(data.msg).toContain("ids");
   });
 
-  test('不存在的 ID 應該回傳空列表', async () => {
-    const response = await fetch('/api.php/provide/vod/?ac=detail&ids=999999');
+  test("不存在的 ID 應該回傳空列表", async () => {
+    const response = await fetch("/api.php/provide/vod/?ac=detail&ids=999999");
     const data = await response.json();
 
     expect(data.code).toBe(-2);
@@ -269,36 +270,36 @@ describe('錯誤處理', () => {
 ### 4.1 標準符合性檢查
 
 ```javascript
-describe('CMS10 標準符合性', () => {
-  test('回應格式應該符合 CMS10 標準', async () => {
-    const response = await fetch('/api.php/provide/vod/?ac=list');
+describe("CMS10 標準符合性", () => {
+  test("回應格式應該符合 CMS10 標準", async () => {
+    const response = await fetch("/api.php/provide/vod/?ac=videolist");
     const data = await response.json();
 
     // 檢查必要欄位
-    const requiredFields = ['code', 'msg', 'page', 'pagecount', 'limit', 'total', 'list'];
-    requiredFields.forEach(field => {
+    const requiredFields = ["code", "msg", "page", "pagecount", "limit", "total", "list"];
+    requiredFields.forEach((field) => {
       expect(data).toHaveProperty(field);
     });
 
     // 檢查資料類型
-    expect(typeof data.code).toBe('number');
-    expect(typeof data.msg).toBe('string');
-    expect(typeof data.page).toBe('number');
-    expect(typeof data.pagecount).toBe('number');
-    expect(typeof data.limit).toBe('string');
-    expect(typeof data.total).toBe('number');
+    expect(typeof data.code).toBe("number");
+    expect(typeof data.msg).toBe("string");
+    expect(typeof data.page).toBe("number");
+    expect(typeof data.pagecount).toBe("number");
+    expect(typeof data.limit).toBe("string");
+    expect(typeof data.total).toBe("number");
     expect(Array.isArray(data.list)).toBe(true);
   });
 
-  test('列表項目應該包含必要欄位', async () => {
-    const response = await fetch('/api.php/provide/vod/?ac=list');
+  test("列表項目應該包含必要欄位", async () => {
+    const response = await fetch("/api.php/provide/vod/?ac=videolist");
     const data = await response.json();
 
     if (data.list.length > 0) {
       const item = data.list[0];
-      const requiredFields = ['vod_id', 'vod_name', 'type_id', 'type_name'];
+      const requiredFields = ["vod_id", "vod_name", "type_id", "type_name"];
 
-      requiredFields.forEach(field => {
+      requiredFields.forEach((field) => {
         expect(item).toHaveProperty(field);
         expect(item[field]).not.toBeNull();
         expect(item[field]).not.toBeUndefined();
@@ -306,20 +307,33 @@ describe('CMS10 標準符合性', () => {
     }
   });
 
-  test('詳情項目應該包含完整欄位', async () => {
-    const response = await fetch('/api.php/provide/vod/?ac=detail&ids=12345');
+  test("詳情項目應該包含完整欄位", async () => {
+    const response = await fetch("/api.php/provide/vod/?ac=detail&ids=12345");
     const data = await response.json();
 
     if (data.list.length > 0) {
       const item = data.list[0];
       const detailFields = [
-        'vod_id', 'vod_name', 'type_id', 'type_name', 'vod_en',
-        'vod_time', 'vod_remarks', 'vod_play_from', 'vod_pic',
-        'vod_area', 'vod_lang', 'vod_year', 'vod_serial',
-        'vod_actor', 'vod_director', 'vod_content', 'vod_play_url'
+        "vod_id",
+        "vod_name",
+        "type_id",
+        "type_name",
+        "vod_en",
+        "vod_time",
+        "vod_remarks",
+        "vod_play_from",
+        "vod_pic",
+        "vod_area",
+        "vod_lang",
+        "vod_year",
+        "vod_serial",
+        "vod_actor",
+        "vod_director",
+        "vod_content",
+        "vod_play_url",
       ];
 
-      detailFields.forEach(field => {
+      detailFields.forEach((field) => {
         expect(item).toHaveProperty(field);
       });
     }
@@ -330,23 +344,23 @@ describe('CMS10 標準符合性', () => {
 ### 4.2 資料格式驗證
 
 ```javascript
-describe('資料格式驗證', () => {
-  test('時間格式應該正確', async () => {
-    const response = await fetch('/api.php/provide/vod/?ac=list');
+describe("資料格式驗證", () => {
+  test("時間格式應該正確", async () => {
+    const response = await fetch("/api.php/provide/vod/?ac=videolist");
     const data = await response.json();
 
-    data.list.forEach(item => {
+    data.list.forEach((item) => {
       if (item.vod_time) {
         expect(item.vod_time).toMatch(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/);
       }
     });
   });
 
-  test('播放地址格式應該正確', async () => {
-    const response = await fetch('/api.php/provide/vod/?ac=detail&ids=12345');
+  test("播放地址格式應該正確", async () => {
+    const response = await fetch("/api.php/provide/vod/?ac=detail&ids=12345");
     const data = await response.json();
 
-    data.list.forEach(item => {
+    data.list.forEach((item) => {
       if (item.vod_play_url) {
         // 檢查格式：集數名稱$播放地址#集數名稱$播放地址
         const urlPattern = /^.+\$.+(\#.+\$.+)*$/;
@@ -355,11 +369,11 @@ describe('資料格式驗證', () => {
     });
   });
 
-  test('ID 應該為正整數', async () => {
-    const response = await fetch('/api.php/provide/vod/?ac=list');
+  test("ID 應該為正整數", async () => {
+    const response = await fetch("/api.php/provide/vod/?ac=videolist");
     const data = await response.json();
 
-    data.list.forEach(item => {
+    data.list.forEach((item) => {
       expect(Number.isInteger(item.vod_id)).toBe(true);
       expect(item.vod_id).toBeGreaterThan(0);
       expect(Number.isInteger(item.type_id)).toBe(true);
@@ -374,27 +388,27 @@ describe('資料格式驗證', () => {
 ### 5.1 回應時間測試
 
 ```javascript
-describe('效能測試', () => {
-  test('列表 API 回應時間應該在合理範圍內', async () => {
+describe("效能測試", () => {
+  test("列表 API 回應時間應該在合理範圍內", async () => {
     const startTime = Date.now();
-    const response = await fetch('/api.php/provide/vod/?ac=list');
+    const response = await fetch("/api.php/provide/vod/?ac=videolist");
     const endTime = Date.now();
 
     expect(response.status).toBe(200);
     expect(endTime - startTime).toBeLessThan(5000); // 5 秒內
   });
 
-  test('詳情 API 回應時間應該在合理範圍內', async () => {
+  test("詳情 API 回應時間應該在合理範圍內", async () => {
     const startTime = Date.now();
-    const response = await fetch('/api.php/provide/vod/?ac=detail&ids=12345');
+    const response = await fetch("/api.php/provide/vod/?ac=detail&ids=12345");
     const endTime = Date.now();
 
     expect(response.status).toBe(200);
     expect(endTime - startTime).toBeLessThan(3000); // 3 秒內
   });
 
-  test('大量資料查詢應該能正常處理', async () => {
-    const ids = Array.from({length: 50}, (_, i) => i + 1).join(',');
+  test("大量資料查詢應該能正常處理", async () => {
+    const ids = Array.from({ length: 50 }, (_, i) => i + 1).join(",");
     const response = await fetch(`/api.php/provide/vod/?ac=detail&ids=${ids}`);
 
     expect(response.status).toBe(200);
@@ -407,15 +421,15 @@ describe('效能測試', () => {
 ### 5.2 併發測試
 
 ```javascript
-describe('併發測試', () => {
-  test('應該能處理併發請求', async () => {
-    const requests = Array.from({length: 10}, () =>
-      fetch('/api.php/provide/vod/?ac=list&pg=1')
+describe("併發測試", () => {
+  test("應該能處理併發請求", async () => {
+    const requests = Array.from({ length: 10 }, () =>
+      fetch("/api.php/provide/vod/?ac=videolist&pg=1"),
     );
 
     const responses = await Promise.all(requests);
 
-    responses.forEach(response => {
+    responses.forEach((response) => {
       expect(response.status).toBe(200);
     });
   });
@@ -427,36 +441,33 @@ describe('併發測試', () => {
 ### 6.1 原有功能測試
 
 ```javascript
-describe('向後相容性測試', () => {
-  test('原有列表端點應該正常工作', async () => {
-    const endpoints = [
-      '/list/airing',
-      '/list/completed'
-    ];
+describe("向後相容性測試", () => {
+  test("原有列表端點應該正常工作", async () => {
+    const endpoints = ["/list/airing", "/list/completed"];
 
     for (const endpoint of endpoints) {
       const response = await fetch(endpoint);
       expect(response.status).toBe(200);
 
       const data = await response.json();
-      expect(data).toHaveProperty('data');
+      expect(data).toHaveProperty("data");
     }
   });
 
-  test('原有動畫端點應該正常工作', async () => {
-    const response = await fetch('/anime/12345');
+  test("原有動畫端點應該正常工作", async () => {
+    const response = await fetch("/anime/12345");
     expect(response.status).toBe(200);
 
     const data = await response.json();
-    expect(data).toHaveProperty('data');
+    expect(data).toHaveProperty("data");
   });
 
-  test('原有搜尋端點應該正常工作', async () => {
-    const response = await fetch('/search/進擊');
+  test("原有搜尋端點應該正常工作", async () => {
+    const response = await fetch("/search/進擊");
     expect(response.status).toBe(200);
 
     const data = await response.json();
-    expect(data).toHaveProperty('data');
+    expect(data).toHaveProperty("data");
   });
 });
 ```
@@ -465,31 +476,31 @@ describe('向後相容性測試', () => {
 
 ### 7.1 基本功能測試
 
-| 測試項目 | 測試步驟 | 預期結果 | 狀態 |
-|----------|----------|----------|------|
-| 列表查詢 | GET `/api.php/provide/vod/?ac=list` | 回傳 CMS10 格式列表 | ⏳ |
-| 分頁功能 | GET `/api.php/provide/vod/?ac=list&pg=2` | 回傳第二頁資料 | ⏳ |
-| 分類篩選 | GET `/api.php/provide/vod/?ac=list&t=1` | 回傳指定分類資料 | ⏳ |
-| 搜尋功能 | GET `/api.php/provide/vod/?ac=list&wd=進擊` | 回傳搜尋結果 | ⏳ |
-| 詳情查詢 | GET `/api.php/provide/vod/?ac=detail&ids=12345` | 回傳詳情資料 | ⏳ |
-| 批量查詢 | GET `/api.php/provide/vod/?ac=detail&ids=1,2,3` | 回傳多筆詳情 | ⏳ |
+| 測試項目 | 測試步驟                                         | 預期結果            | 狀態 |
+| -------- | ------------------------------------------------ | ------------------- | ---- |
+| 列表查詢 | GET `/api.php/provide/vod/?ac=videolist`         | 回傳 CMS10 格式列表 | ⏳   |
+| 分頁功能 | GET `/api.php/provide/vod/?ac=videolist&pg=2`    | 回傳第二頁資料      | ⏳   |
+| 分類篩選 | GET `/api.php/provide/vod/?ac=videolist&t=1`     | 回傳指定分類資料    | ⏳   |
+| 搜尋功能 | GET `/api.php/provide/vod/?ac=videolist&wd=進擊` | 回傳搜尋結果        | ⏳   |
+| 詳情查詢 | GET `/api.php/provide/vod/?ac=detail&ids=12345`  | 回傳詳情資料        | ⏳   |
+| 批量查詢 | GET `/api.php/provide/vod/?ac=detail&ids=1,2,3`  | 回傳多筆詳情        | ⏳   |
 
 ### 7.2 錯誤處理測試
 
-| 測試項目 | 測試步驟 | 預期結果 | 狀態 |
-|----------|----------|----------|------|
-| 缺少參數 | GET `/api.php/provide/vod/` | code: -1, 參數錯誤 | ⏳ |
-| 無效參數 | GET `/api.php/provide/vod/?ac=invalid` | code: -1, 參數錯誤 | ⏳ |
-| 資料不存在 | GET `/api.php/provide/vod/?ac=detail&ids=999999` | code: -2, 資料不存在 | ⏳ |
-| 無效分頁 | GET `/api.php/provide/vod/?ac=list&pg=abc` | code: -1, 參數錯誤 | ⏳ |
+| 測試項目   | 測試步驟                                         | 預期結果             | 狀態 |
+| ---------- | ------------------------------------------------ | -------------------- | ---- |
+| 缺少參數   | GET `/api.php/provide/vod/`                      | code: -1, 參數錯誤   | ⏳   |
+| 無效參數   | GET `/api.php/provide/vod/?ac=invalid`           | code: -1, 參數錯誤   | ⏳   |
+| 資料不存在 | GET `/api.php/provide/vod/?ac=detail&ids=999999` | code: -2, 資料不存在 | ⏳   |
+| 無效分頁   | GET `/api.php/provide/vod/?ac=videolist&pg=abc`  | code: -1, 參數錯誤   | ⏳   |
 
 ### 7.3 相容性測試
 
-| 測試項目 | 測試步驟 | 預期結果 | 狀態 |
-|----------|----------|----------|------|
-| 原有端點 | 測試所有原有 API 端點 | 功能正常，格式不變 | ⏳ |
-| CMS10 標準 | 驗證回應格式符合 CMS10 規格 | 完全符合標準 | ⏳ |
-| 資料完整性 | 檢查轉換後資料的完整性 | 無資料遺失 | ⏳ |
+| 測試項目   | 測試步驟                    | 預期結果           | 狀態 |
+| ---------- | --------------------------- | ------------------ | ---- |
+| 原有端點   | 測試所有原有 API 端點       | 功能正常，格式不變 | ⏳   |
+| CMS10 標準 | 驗證回應格式符合 CMS10 規格 | 完全符合標準       | ⏳   |
+| 資料完整性 | 檢查轉換後資料的完整性      | 無資料遺失         | ⏳   |
 
 ## 8. 測試環境設定
 
@@ -512,9 +523,9 @@ class TestDataGenerator {
       author: "測試作者",
       premiere: [2023, 1, 1],
       episodes: {
-        "第 01 話": ["12345", "001"]
+        "第 01 話": ["12345", "001"],
       },
-      ...overrides
+      ...overrides,
     };
   }
 
@@ -522,10 +533,10 @@ class TestDataGenerator {
     return {
       data: {
         meta: { time: Date.now(), length: count },
-        data: Array.from({length: count}, (_, i) =>
-          this.generateAnimeItem({ id: i + 1, title: `測試動畫 ${i + 1}` })
-        )
-      }
+        data: Array.from({ length: count }, (_, i) =>
+          this.generateAnimeItem({ id: i + 1, title: `測試動畫 ${i + 1}` }),
+        ),
+      },
     };
   }
 }
@@ -536,21 +547,18 @@ class TestDataGenerator {
 ```javascript
 // Jest 配置
 module.exports = {
-  testEnvironment: 'node',
-  setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
-  testMatch: ['**/__tests__/**/*.test.js'],
-  collectCoverageFrom: [
-    'src/**/*.js',
-    '!src/**/*.test.js'
-  ],
+  testEnvironment: "node",
+  setupFilesAfterEnv: ["<rootDir>/tests/setup.js"],
+  testMatch: ["**/__tests__/**/*.test.js"],
+  collectCoverageFrom: ["src/**/*.js", "!src/**/*.test.js"],
   coverageThreshold: {
     global: {
       branches: 80,
       functions: 80,
       lines: 80,
-      statements: 80
-    }
-  }
+      statements: 80,
+    },
+  },
 };
 ```
 
@@ -558,12 +566,12 @@ module.exports = {
 
 ### 9.1 測試階段
 
-| 階段 | 測試類型 | 執行時機 | 負責人 |
-|------|----------|----------|--------|
-| 開發階段 | 單元測試 | 每次程式碼提交 | 開發者 |
-| 整合階段 | 整合測試 | 功能完成後 | 開發者 |
-| 測試階段 | 全面測試 | 開發完成後 | 測試人員 |
-| 上線前 | 回歸測試 | 部署前 | 測試人員 |
+| 階段     | 測試類型 | 執行時機       | 負責人   |
+| -------- | -------- | -------------- | -------- |
+| 開發階段 | 單元測試 | 每次程式碼提交 | 開發者   |
+| 整合階段 | 整合測試 | 功能完成後     | 開發者   |
+| 測試階段 | 全面測試 | 開發完成後     | 測試人員 |
+| 上線前   | 回歸測試 | 部署前         | 測試人員 |
 
 ### 9.2 測試指令
 

@@ -108,7 +108,7 @@ function createRouteConfig() {
     cms10: {
       endpoints: [
         {
-          path: "/api.php/provide/vod/?ac=list",
+          path: "/api.php/provide/vod/?ac=videolist",
           description: "CMS10 列表 API",
           parameters: [
             { name: "ac", required: true, description: "操作類型 (list)" },
@@ -202,17 +202,17 @@ function generateRouteDocs() {
       cms10: [
         {
           title: "CMS10 列表查詢",
-          url: "/api.php/provide/vod/?ac=list&pg=1&limit=20",
+          url: "/api.php/provide/vod/?ac=videolist&pg=1&limit=20",
           description: "獲取第一頁的動畫列表，每頁20項"
         },
         {
           title: "CMS10 分類查詢",
-          url: "/api.php/provide/vod/?ac=list&t=1&pg=1",
+          url: "/api.php/provide/vod/?ac=videolist&t=1&pg=1",
           description: "獲取動作分類的動畫列表"
         },
         {
           title: "CMS10 搜尋查詢",
-          url: "/api.php/provide/vod/?ac=list&wd=巨人&pg=1",
+          url: "/api.php/provide/vod/?ac=videolist&wd=巨人&pg=1",
           description: "搜尋包含'巨人'關鍵字的動畫"
         },
         {

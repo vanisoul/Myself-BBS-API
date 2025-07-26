@@ -88,22 +88,22 @@ curl "http://localhost:3000/search/進擊的巨人"
 
 ```bash
 # 基本列表
-curl "http://localhost:3000/api.php/provide/vod/?ac=list"
+curl "http://localhost:3000/api.php/provide/vod/?ac=videolist"
 
 # 分頁查詢
-curl "http://localhost:3000/api.php/provide/vod/?ac=list&pg=1&limit=10"
+curl "http://localhost:3000/api.php/provide/vod/?ac=videolist&pg=1&limit=10"
 
 # 分類篩選 (動作分類)
-curl "http://localhost:3000/api.php/provide/vod/?ac=list&t=1"
+curl "http://localhost:3000/api.php/provide/vod/?ac=videolist&t=1"
 
 # 搜尋功能
-curl "http://localhost:3000/api.php/provide/vod/?ac=list&wd=巨人"
+curl "http://localhost:3000/api.php/provide/vod/?ac=videolist&wd=巨人"
 
 # 時間篩選 (最近24小時)
-curl "http://localhost:3000/api.php/provide/vod/?ac=list&h=24"
+curl "http://localhost:3000/api.php/provide/vod/?ac=videolist&h=24"
 
 # 組合查詢
-curl "http://localhost:3000/api.php/provide/vod/?ac=list&t=1&pg=1&limit=5"
+curl "http://localhost:3000/api.php/provide/vod/?ac=videolist&t=1&pg=1&limit=5"
 ```
 
 #### 詳情查詢
@@ -191,10 +191,10 @@ curl "http://localhost:3000/api.php/provide/vod/?ac=invalid"
 curl "http://localhost:3000/api.php/provide/vod/?ac=detail"
 
 # 無效的頁碼
-curl "http://localhost:3000/api.php/provide/vod/?ac=list&pg=0"
+curl "http://localhost:3000/api.php/provide/vod/?ac=videolist&pg=0"
 
 # 無效的分類 ID
-curl "http://localhost:3000/api.php/provide/vod/?ac=list&t=999"
+curl "http://localhost:3000/api.php/provide/vod/?ac=videolist&t=999"
 ```
 
 ### 錯誤回應格式
@@ -230,7 +230,7 @@ curl "http://localhost:3000/api.php/provide/vod/?ac=list&t=999"
 
 ```javascript
 // 測試 CMS10 列表 API
-fetch("http://localhost:3000/api.php/provide/vod/?ac=list&limit=5")
+fetch("http://localhost:3000/api.php/provide/vod/?ac=videolist&limit=5")
   .then((response) => response.json())
   .then((data) => console.log(data));
 
@@ -246,7 +246,7 @@ fetch("http://localhost:3000/api.php/provide/vod/?ac=detail&ids=1")
 
 ```bash
 # 使用 curl 測試回應時間
-curl -w "@curl-format.txt" -o /dev/null -s "http://localhost:3000/api.php/provide/vod/?ac=list"
+curl -w "@curl-format.txt" -o /dev/null -s "http://localhost:3000/api.php/provide/vod/?ac=videolist"
 ```
 
 建立 `curl-format.txt` 檔案：
@@ -266,7 +266,7 @@ curl -w "@curl-format.txt" -o /dev/null -s "http://localhost:3000/api.php/provid
 
 ```bash
 # 使用 ab (Apache Bench) 進行壓力測試
-ab -n 100 -c 10 "http://localhost:3000/api.php/provide/vod/?ac=list"
+ab -n 100 -c 10 "http://localhost:3000/api.php/provide/vod/?ac=videolist"
 ```
 
 ## 🐛 問題排查
@@ -377,7 +377,7 @@ npm run dev:local & sleep 3 && node test-cms10-api.js && kill %1
 curl -s http://localhost:3000/api.php/provide/vod/health | jq .
 
 # 快速格式檢查
-curl -s "http://localhost:3000/api.php/provide/vod/?ac=list&limit=1" | jq .
+curl -s "http://localhost:3000/api.php/provide/vod/?ac=videolist&limit=1" | jq .
 ```
 
 ### 開發建議

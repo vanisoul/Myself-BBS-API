@@ -28,22 +28,22 @@ const testCases = [
   },
   {
     name: '🆕 CMS10 API - 基本列表',
-    url: `${BASE_URL}/api.php/provide/vod/?ac=list`,
+    url: `${BASE_URL}/api.php/provide/vod/?ac=videolist`,
     description: '測試 CMS10 標準列表 API'
   },
   {
     name: '🆕 CMS10 API - 分頁列表',
-    url: `${BASE_URL}/api.php/provide/vod/?ac=list&pg=1&limit=5`,
+    url: `${BASE_URL}/api.php/provide/vod/?ac=videolist&pg=1&limit=5`,
     description: '測試 CMS10 分頁功能'
   },
   {
     name: '🆕 CMS10 API - 分類篩選',
-    url: `${BASE_URL}/api.php/provide/vod/?ac=list&t=1`,
+    url: `${BASE_URL}/api.php/provide/vod/?ac=videolist&t=1`,
     description: '測試 CMS10 分類篩選 (動作分類)'
   },
   {
     name: '🆕 CMS10 API - 搜尋功能',
-    url: `${BASE_URL}/api.php/provide/vod/?ac=list&wd=巨人`,
+    url: `${BASE_URL}/api.php/provide/vod/?ac=videolist&wd=巨人`,
     description: '測試 CMS10 搜尋功能'
   },
   {
@@ -89,7 +89,7 @@ const errorTestCases = [
   },
   {
     name: '❌ 錯誤測試 - 無效的頁碼',
-    url: `${BASE_URL}/api.php/provide/vod/?ac=list&pg=0`,
+    url: `${BASE_URL}/api.php/provide/vod/?ac=videolist&pg=0`,
     description: '測試無效頁碼的錯誤處理'
   }
 ];

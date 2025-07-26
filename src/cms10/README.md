@@ -29,27 +29,27 @@
 ### 基本使用
 
 ```javascript
-import { handleCms10Request } from './cms10/index.js';
+import { handleCms10Request } from "./cms10/index.js";
 
 // 處理 CMS10 列表請求
 const listResponse = await handleCms10Request({
-  ac: 'list',
-  pg: '1',
-  limit: '20'
+  ac: "list",
+  pg: "1",
+  limit: "20",
 });
 
 // 處理 CMS10 詳情請求
 const detailResponse = await handleCms10Request({
-  ac: 'detail',
-  ids: '1,2,3'
+  ac: "detail",
+  ids: "1,2,3",
 });
 ```
 
 ### 路由整合
 
 ```javascript
-import { integrateCms10Routes } from './cms10/routes.js';
-import { Router } from 'itty-router';
+import { Router } from "itty-router";
+import { integrateCms10Routes } from "./cms10/routes.js";
 
 const router = Router();
 integrateCms10Routes(router);
@@ -60,11 +60,13 @@ integrateCms10Routes(router);
 ### CMS10 標準端點
 
 #### 列表 API
+
 ```
-GET /api.php/provide/vod/?ac=list
+GET /api.php/provide/vod/?ac=videolist
 ```
 
 **參數**:
+
 - `ac` (必要): 操作類型，固定為 "list"
 - `pg` (可選): 頁碼，預設 1
 - `limit` (可選): 每頁數量，預設 20，最大 100
@@ -73,31 +75,35 @@ GET /api.php/provide/vod/?ac=list
 - `h` (可選): 更新時間篩選 (小時)
 
 **範例**:
+
 ```bash
 # 基本列表
-curl "https://api.example.com/api.php/provide/vod/?ac=list"
+curl "https://api.example.com/api.php/provide/vod/?ac=videolist"
 
 # 分頁查詢
-curl "https://api.example.com/api.php/provide/vod/?ac=list&pg=2&limit=10"
+curl "https://api.example.com/api.php/provide/vod/?ac=videolist&pg=2&limit=10"
 
 # 分類篩選
-curl "https://api.example.com/api.php/provide/vod/?ac=list&t=1"
+curl "https://api.example.com/api.php/provide/vod/?ac=videolist&t=1"
 
 # 搜尋
-curl "https://api.example.com/api.php/provide/vod/?ac=list&wd=進擊的巨人"
+curl "https://api.example.com/api.php/provide/vod/?ac=videolist&wd=進擊的巨人"
 ```
 
 #### 詳情 API
+
 ```
 GET /api.php/provide/vod/?ac=detail&ids=1,2,3
 ```
 
 **參數**:
+
 - `ac` (必要): 操作類型，固定為 "detail"
 - `ids` (必要): ID 列表，逗號分隔
 - `h` (可選): 更新時間篩選 (小時)
 
 **範例**:
+
 ```bash
 # 單個詳情
 curl "https://api.example.com/api.php/provide/vod/?ac=detail&ids=1"
@@ -109,16 +115,19 @@ curl "https://api.example.com/api.php/provide/vod/?ac=detail&ids=1,2,3"
 ### 擴展功能端點
 
 #### 分類列表
+
 ```
 GET /api.php/provide/vod/categories
 ```
 
 #### API 資訊
+
 ```
 GET /api.php/provide/vod/info
 ```
 
 #### 健康檢查
+
 ```
 GET /api.php/provide/vod/health
 ```
@@ -144,10 +153,10 @@ npm install itty-router fuse.js
 ```javascript
 // 配置選項
 const config = {
-  baseUrl: 'https://your-api-domain.com',
+  baseUrl: "https://your-api-domain.com",
   defaultLimit: 20,
   maxLimit: 100,
-  timezone: 'Asia/Taipei'
+  timezone: "Asia/Taipei",
 };
 ```
 
@@ -169,10 +178,10 @@ export default {
       console.error(err);
       return new Response(JSON.stringify({ error: err.message }), {
         status: 500,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { "Content-Type": "application/json" },
       });
     }
-  }
+  },
 };
 ```
 
@@ -181,15 +190,13 @@ export default {
 ### 基本轉換
 
 ```javascript
-import { convertListResponse, convertDetailResponse } from './cms10/index.js';
+import { convertDetailResponse, convertListResponse } from "./cms10/index.js";
 
 // 轉換列表資料
 const myselfData = {
   data: {
-    data: [
-      { id: 1, title: "進擊的巨人", category: ["動作"] }
-    ]
-  }
+    data: [{ id: 1, title: "進擊的巨人", category: ["動作"] }],
+  },
 };
 
 const cms10Response = convertListResponse(myselfData, { pg: 1, limit: 20 });
@@ -199,13 +206,13 @@ console.log(cms10Response);
 ### 錯誤處理
 
 ```javascript
-import { withErrorHandling, createParameterError } from './cms10/index.js';
+import { createParameterError, withErrorHandling } from "./cms10/index.js";
 
 const handler = withErrorHandling(async (request) => {
   const { query } = request;
 
   if (!query.ac) {
-    throw createParameterError('ac', '為必要參數');
+    throw createParameterError("ac", "為必要參數");
   }
 
   // 處理邏輯...
@@ -215,7 +222,7 @@ const handler = withErrorHandling(async (request) => {
 ### 參數驗證
 
 ```javascript
-import { validateFullQuery, createValidationError } from './cms10/index.js';
+import { createValidationError, validateFullQuery } from "./cms10/index.js";
 
 const validation = validateFullQuery(query);
 if (!validation.isValid) {
@@ -307,21 +314,21 @@ TIMEZONE=Asia/Taipei
 
 ```javascript
 export const DEFAULT_CONFIG = {
-  baseUrl: 'https://myself-bbs.jacob.workers.dev',
+  baseUrl: "https://myself-bbs.jacob.workers.dev",
   defaultLimit: 20,
   maxLimit: 100,
-  timezone: 'Asia/Taipei'
+  timezone: "Asia/Taipei",
 };
 ```
 
 ### 自定義配置
 
 ```javascript
-import { handleCms10Request } from './cms10/index.js';
+import { handleCms10Request } from "./cms10/index.js";
 
 const customOptions = {
-  baseUrl: 'https://custom-domain.com',
-  defaultLimit: 50
+  baseUrl: "https://custom-domain.com",
+  defaultLimit: 50,
 };
 
 const response = await handleCms10Request(query, customOptions);
