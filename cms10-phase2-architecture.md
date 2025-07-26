@@ -4,7 +4,7 @@
 
 ```mermaid
 graph TD
-    A[CMS10 API Request] --> B{ac=detail?}
+    A[CMS10 API Request] --> B{ac=videolist?}
     B -->|Yes| C[handleCms10Detail]
     B -->|No| D[其他處理器]
 
@@ -42,7 +42,7 @@ sequenceDiagram
     participant Detector
     participant Generator
 
-    Client->>API: GET /api.php/provide/vod/?ac=detail&ids=123
+    Client->>API: GET /api.php/provide/vod/?ac=videolist&ids=123
     API->>Handler: handleCms10Detail(query)
     Handler->>API: getAnime(123)
     API-->>Handler: 動畫資料 + episodes

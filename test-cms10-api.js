@@ -48,7 +48,7 @@ const testCases = [
   },
   {
     name: '🆕 CMS10 API - 詳情查詢',
-    url: `${BASE_URL}/api.php/provide/vod/?ac=detail&ids=1,2`,
+    url: `${BASE_URL}/api.php/provide/vod/?ac=videolist&ids=1,2`,
     description: '測試 CMS10 詳情查詢'
   },
   {
@@ -84,7 +84,7 @@ const errorTestCases = [
   },
   {
     name: '❌ 錯誤測試 - detail 缺少 ids',
-    url: `${BASE_URL}/api.php/provide/vod/?ac=detail`,
+    url: `${BASE_URL}/api.php/provide/vod/?ac=videolist`,
     description: '測試 detail 操作缺少 ids 參數'
   },
   {

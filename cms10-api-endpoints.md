@@ -16,7 +16,7 @@
 | 端點                       | 功能         | CMS10 標準 | 對應原始端點                      |
 | -------------------------- | ------------ | ---------- | --------------------------------- |
 | `?ac=videolist`            | 獲取視頻列表 | ✅         | `/list/airing`, `/list/completed` |
-| `?ac=detail`               | 獲取視頻詳情 | ✅         | `/anime/{id}`, `/anime/all`       |
+| `?ac=videolist`            | 獲取視頻詳情 | ✅         | `/anime/{id}`, `/anime/all`       |
 | `?ac=videolist&wd={query}` | 搜尋視頻     | ✅         | `/search/{query}`                 |
 
 ### 1.2 保留原有端點
@@ -110,7 +110,7 @@ async function handleCms10List(query) {
 
 ### 2.2 視頻詳情端點
 
-**路徑**: `/api.php/provide/vod/?ac=detail`
+**路徑**: `/api.php/provide/vod/?ac=videolist`
 
 #### 2.2.1 支援參數
 
@@ -491,8 +491,8 @@ GET /api.php/provide/vod/?ac=videolist&pg=2
 GET /api.php/provide/vod/?ac=videolist&t=1
 
 # 詳情測試
-GET /api.php/provide/vod/?ac=detail&ids=12345
-GET /api.php/provide/vod/?ac=detail&ids=12345,67890
+GET /api.php/provide/vod/?ac=videolist&ids=12345
+GET /api.php/provide/vod/?ac=videolist&ids=12345,67890
 
 # 搜尋測試
 GET /api.php/provide/vod/?ac=videolist&wd=進擊
@@ -503,12 +503,12 @@ GET /api.php/provide/vod/?ac=videolist&wd=進擊
 ```bash
 # 錯誤參數測試
 GET /api.php/provide/vod/?ac=invalid
-GET /api.php/provide/vod/?ac=detail
+GET /api.php/provide/vod/?ac=videolist
 GET /api.php/provide/vod/?ac=videolist&pg=999999
 
 # 空資料測試
 GET /api.php/provide/vod/?ac=videolist&wd=不存在的關鍵字
-GET /api.php/provide/vod/?ac=detail&ids=999999
+GET /api.php/provide/vod/?ac=videolist&ids=999999
 ```
 
 ## 10. 部署注意事項

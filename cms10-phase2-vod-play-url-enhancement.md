@@ -4,7 +4,7 @@
 
 **規格異動日期時間**: 2025-07-26 16:55:00 (UTC+8)
 
-本階段針對 CMS10 API 的 `ac=detail` 端點進行增強，實作完整的 `vod_play_url` 處理邏輯，支援兩種不同的 episodes 資料格式，並生成對應的 M3U8 播放連結。
+本階段針對 CMS10 API 的 `ac=videolist` 端點進行增強，實作完整的 `vod_play_url` 處理邏輯，支援兩種不同的 episodes 資料格式，並生成對應的 M3U8 播放連結。
 
 ## 需求分析
 

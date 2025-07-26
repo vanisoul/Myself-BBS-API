@@ -95,7 +95,7 @@ const CATEGORY_MAPPING = {
 | 端點                                 | 功能     | 實作狀態 | 測試狀態    |
 | ------------------------------------ | -------- | -------- | ----------- |
 | `/api.php/provide/vod/?ac=videolist` | 列表查詢 | ✅ 完成  | ✅ 測試通過 |
-| `/api.php/provide/vod/?ac=detail`    | 詳情查詢 | ✅ 完成  | ✅ 測試通過 |
+| `/api.php/provide/vod/?ac=videolist` | 詳情查詢 | ✅ 完成  | ✅ 測試通過 |
 
 ### 擴展功能端點
 

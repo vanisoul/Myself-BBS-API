@@ -120,7 +120,7 @@ function createRouteConfig() {
           ]
         },
         {
-          path: "/api.php/provide/vod/?ac=detail",
+          path: "/api.php/provide/vod/?ac=videolist",
           description: "CMS10 詳情 API",
           parameters: [
             { name: "ac", required: true, description: "操作類型 (detail)" },
@@ -217,7 +217,7 @@ function generateRouteDocs() {
         },
         {
           title: "CMS10 詳情查詢",
-          url: "/api.php/provide/vod/?ac=detail&ids=1,2,3",
+          url: "/api.php/provide/vod/?ac=videolist&ids=1,2,3",
           description: "獲取指定 ID 的動畫詳情"
         }
       ]
@@ -252,7 +252,7 @@ function validateRouteConfig() {
   // 檢查必要參數
   config.cms10.endpoints.forEach(endpoint => {
     const requiredParams = endpoint.parameters?.filter(p => p.required) || [];
-    if (endpoint.path.includes('ac=detail') && !requiredParams.some(p => p.name === 'ids')) {
+    if (endpoint.path.includes('ac=videolist') && !requiredParams.some(p => p.name === 'ids')) {
       warnings.push(`端點 ${endpoint.path} 缺少必要參數 ids 的定義`);
     }
   });

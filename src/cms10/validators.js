@@ -17,8 +17,8 @@ const ValidationRules = {
   ac: {
     required: true,
     type: 'string',
-    enum: ['videolist', 'detail'],
-    message: 'ac 參數必須為 videolist 或 detail'
+    enum: ['videolist', 'list'],
+    message: 'ac 參數必須為 videolist 或 list (向後相容)'
   },
 
   ids: {
@@ -198,10 +198,9 @@ function validateQuery(query) {
 function validateBusinessLogic(params) {
   const errors = [];
 
-  // detail 操作必須提供 ids
-  if (params.ac === 'detail' && !params.ids) {
-    errors.push('detail 操作必須提供 ids 參數');
-  }
+  // videolist 操作的 ids 參數是可選的
+  // 如果提供 ids，則返回指定的動畫詳情
+  // 如果不提供 ids，則返回列表
 
   // 分頁參數合理性檢查
   if (params.pg && params.pg > 1000) {

@@ -36,7 +36,7 @@ src/cms10/
 ```
 現有端點 (保留)                    新增 CMS10 端點
 ├── /list/airing                  ├── /api.php/provide/vod/?ac=videolist
-├── /list/completed               ├── /api.php/provide/vod/?ac=detail
+├── /list/completed               ├── /api.php/provide/vod/?ac=videolist
 ├── /anime/{id}                   ├── /api.php/provide/vod/categories (擴展)
 ├── /anime/all                    ├── /api.php/provide/vod/info (擴展)
 ├── /search/{query}               └── /api.php/provide/vod/health (擴展)
@@ -95,7 +95,7 @@ GET /api.php/provide/vod/?ac=videolist
 ### 3.2 詳情 API
 
 ```
-GET /api.php/provide/vod/?ac=detail&ids=1,2,3
+GET /api.php/provide/vod/?ac=videolist&ids=1,2,3
 ```
 
 **參數**:
@@ -337,10 +337,10 @@ curl "https://myself-bbs.jacob.workers.dev/api.php/provide/vod/?ac=videolist&t=1
 
 ```bash
 # 獲取單個動畫詳情
-curl "https://myself-bbs.jacob.workers.dev/api.php/provide/vod/?ac=detail&ids=1"
+curl "https://myself-bbs.jacob.workers.dev/api.php/provide/vod/?ac=videolist&ids=1"
 
 # 獲取多個動畫詳情
-curl "https://myself-bbs.jacob.workers.dev/api.php/provide/vod/?ac=detail&ids=1,2,3"
+curl "https://myself-bbs.jacob.workers.dev/api.php/provide/vod/?ac=videolist&ids=1,2,3"
 ```
 
 ### 9.3 擴展功能

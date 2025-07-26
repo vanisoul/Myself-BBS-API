@@ -16,7 +16,7 @@
 | 端點            | 功能         | 說明                 |
 | --------------- | ------------ | -------------------- |
 | `?ac=videolist` | 獲取視頻列表 | 支援分頁、篩選、排序 |
-| `?ac=detail`    | 獲取視頻詳情 | 支援單個或批量查詢   |
+| `?ac=videolist` | 獲取視頻詳情 | 支援單個或批量查詢   |
 
 ## 1. 視頻列表 API
 
@@ -67,7 +67,7 @@
 
 ### 2.1 基本資訊
 
-- **端點**: `/api.php/provide/vod/?ac=detail`
+- **端點**: `/api.php/provide/vod/?ac=videolist`
 - **方法**: GET
 - **功能**: 獲取視頻詳細資訊
 
@@ -193,7 +193,7 @@ curl "http://example.com/api.php/provide/vod/?ac=videolist&t=1&pg=1"
 ### 6.3 獲取視頻詳情
 
 ```bash
-curl "http://example.com/api.php/provide/vod/?ac=detail&ids=123,456"
+curl "http://example.com/api.php/provide/vod/?ac=videolist&ids=123,456"
 ```
 
 ### 6.4 搜尋視頻
@@ -205,7 +205,7 @@ curl "http://example.com/api.php/provide/vod/?ac=videolist&wd=復仇者聯盟"
 ### 6.5 獲取最近 24 小時更新的視頻
 
 ```bash
-curl "http://example.com/api.php/provide/vod/?ac=detail&h=24"
+curl "http://example.com/api.php/provide/vod/?ac=videolist&h=24"
 ```
 
 ## 7. 最佳實踐

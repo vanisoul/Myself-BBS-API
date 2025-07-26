@@ -203,9 +203,9 @@ describe("CMS10 API 端點", () => {
     });
   });
 
-  describe("GET /api.php/provide/vod/?ac=detail", () => {
+  describe("GET /api.php/provide/vod/?ac=videolist", () => {
     test("應該回傳正確的詳情格式", async () => {
-      const response = await fetch("/api.php/provide/vod/?ac=detail&ids=12345");
+      const response = await fetch("/api.php/provide/vod/?ac=videolist&ids=12345");
       const data = await response.json();
 
       expect(data.code).toBe(1);
@@ -219,7 +219,7 @@ describe("CMS10 API 端點", () => {
     });
 
     test("應該支援批量查詢", async () => {
-      const response = await fetch("/api.php/provide/vod/?ac=detail&ids=12345,67890");
+      const response = await fetch("/api.php/provide/vod/?ac=videolist&ids=12345,67890");
       const data = await response.json();
 
       expect(data.list.length).toBeLessThanOrEqual(2);
@@ -248,7 +248,7 @@ describe("錯誤處理", () => {
   });
 
   test("detail 操作缺少 ids 應該回傳錯誤", async () => {
-    const response = await fetch("/api.php/provide/vod/?ac=detail");
+    const response = await fetch("/api.php/provide/vod/?ac=videolist");
     const data = await response.json();
 
     expect(data.code).toBe(-1);
@@ -256,7 +256,7 @@ describe("錯誤處理", () => {
   });
 
   test("不存在的 ID 應該回傳空列表", async () => {
-    const response = await fetch("/api.php/provide/vod/?ac=detail&ids=999999");
+    const response = await fetch("/api.php/provide/vod/?ac=videolist&ids=999999");
     const data = await response.json();
 
     expect(data.code).toBe(-2);
@@ -308,7 +308,7 @@ describe("CMS10 標準符合性", () => {
   });
 
   test("詳情項目應該包含完整欄位", async () => {
-    const response = await fetch("/api.php/provide/vod/?ac=detail&ids=12345");
+    const response = await fetch("/api.php/provide/vod/?ac=videolist&ids=12345");
     const data = await response.json();
 
     if (data.list.length > 0) {
@@ -357,7 +357,7 @@ describe("資料格式驗證", () => {
   });
 
   test("播放地址格式應該正確", async () => {
-    const response = await fetch("/api.php/provide/vod/?ac=detail&ids=12345");
+    const response = await fetch("/api.php/provide/vod/?ac=videolist&ids=12345");
     const data = await response.json();
 
     data.list.forEach((item) => {
@@ -400,7 +400,7 @@ describe("效能測試", () => {
 
   test("詳情 API 回應時間應該在合理範圍內", async () => {
     const startTime = Date.now();
-    const response = await fetch("/api.php/provide/vod/?ac=detail&ids=12345");
+    const response = await fetch("/api.php/provide/vod/?ac=videolist&ids=12345");
     const endTime = Date.now();
 
     expect(response.status).toBe(200);
@@ -409,7 +409,7 @@ describe("效能測試", () => {
 
   test("大量資料查詢應該能正常處理", async () => {
     const ids = Array.from({ length: 50 }, (_, i) => i + 1).join(",");
-    const response = await fetch(`/api.php/provide/vod/?ac=detail&ids=${ids}`);
+    const response = await fetch(`/api.php/provide/vod/?ac=videolist&ids=${ids}`);
 
     expect(response.status).toBe(200);
     const data = await response.json();
@@ -476,23 +476,23 @@ describe("向後相容性測試", () => {
 
 ### 7.1 基本功能測試
 
-| 測試項目 | 測試步驟                                         | 預期結果            | 狀態 |
-| -------- | ------------------------------------------------ | ------------------- | ---- |
-| 列表查詢 | GET `/api.php/provide/vod/?ac=videolist`         | 回傳 CMS10 格式列表 | ⏳   |
-| 分頁功能 | GET `/api.php/provide/vod/?ac=videolist&pg=2`    | 回傳第二頁資料      | ⏳   |
-| 分類篩選 | GET `/api.php/provide/vod/?ac=videolist&t=1`     | 回傳指定分類資料    | ⏳   |
-| 搜尋功能 | GET `/api.php/provide/vod/?ac=videolist&wd=進擊` | 回傳搜尋結果        | ⏳   |
-| 詳情查詢 | GET `/api.php/provide/vod/?ac=detail&ids=12345`  | 回傳詳情資料        | ⏳   |
-| 批量查詢 | GET `/api.php/provide/vod/?ac=detail&ids=1,2,3`  | 回傳多筆詳情        | ⏳   |
+| 測試項目 | 測試步驟                                           | 預期結果            | 狀態 |
+| -------- | -------------------------------------------------- | ------------------- | ---- |
+| 列表查詢 | GET `/api.php/provide/vod/?ac=videolist`           | 回傳 CMS10 格式列表 | ⏳   |
+| 分頁功能 | GET `/api.php/provide/vod/?ac=videolist&pg=2`      | 回傳第二頁資料      | ⏳   |
+| 分類篩選 | GET `/api.php/provide/vod/?ac=videolist&t=1`       | 回傳指定分類資料    | ⏳   |
+| 搜尋功能 | GET `/api.php/provide/vod/?ac=videolist&wd=進擊`   | 回傳搜尋結果        | ⏳   |
+| 詳情查詢 | GET `/api.php/provide/vod/?ac=videolist&ids=12345` | 回傳詳情資料        | ⏳   |
+| 批量查詢 | GET `/api.php/provide/vod/?ac=videolist&ids=1,2,3` | 回傳多筆詳情        | ⏳   |
 
 ### 7.2 錯誤處理測試
 
-| 測試項目   | 測試步驟                                         | 預期結果             | 狀態 |
-| ---------- | ------------------------------------------------ | -------------------- | ---- |
-| 缺少參數   | GET `/api.php/provide/vod/`                      | code: -1, 參數錯誤   | ⏳   |
-| 無效參數   | GET `/api.php/provide/vod/?ac=invalid`           | code: -1, 參數錯誤   | ⏳   |
-| 資料不存在 | GET `/api.php/provide/vod/?ac=detail&ids=999999` | code: -2, 資料不存在 | ⏳   |
-| 無效分頁   | GET `/api.php/provide/vod/?ac=videolist&pg=abc`  | code: -1, 參數錯誤   | ⏳   |
+| 測試項目   | 測試步驟                                            | 預期結果             | 狀態 |
+| ---------- | --------------------------------------------------- | -------------------- | ---- |
+| 缺少參數   | GET `/api.php/provide/vod/`                         | code: -1, 參數錯誤   | ⏳   |
+| 無效參數   | GET `/api.php/provide/vod/?ac=invalid`              | code: -1, 參數錯誤   | ⏳   |
+| 資料不存在 | GET `/api.php/provide/vod/?ac=videolist&ids=999999` | code: -2, 資料不存在 | ⏳   |
+| 無效分頁   | GET `/api.php/provide/vod/?ac=videolist&pg=abc`     | code: -1, 參數錯誤   | ⏳   |
 
 ### 7.3 相容性測試
 

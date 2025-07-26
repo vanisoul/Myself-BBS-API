@@ -26,7 +26,7 @@
 ```
 現有端點 (保留)                    新增 CMS10 端點
 ├── /list/airing                  ├── /api.php/provide/vod/?ac=videolist
-├── /list/completed               ├── /api.php/provide/vod/?ac=detail
+├── /list/completed               ├── /api.php/provide/vod/?ac=videolist
 ├── /anime/{id}                   └── /api.php/provide/vod/?ac=videolist&wd={query}
 ├── /anime/all
 ├── /search/{query}

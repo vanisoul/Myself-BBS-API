@@ -105,14 +105,15 @@ export {
 
 // 匯出處理器相關功能
 export {
-  handleCms10List,
-  handleCms10Detail,
+  handleCms10VideoList,
   handleCms10Search,
   handleCms10Category,
   handleCms10Request,
   getCms10Categories,
   getCms10Info,
-  healthCheck
+  healthCheck,
+  // 向後相容的別名
+  handleCms10VideoList as handleCms10List
 } from './handlers.js';
 
 // 匯出路由相關功能

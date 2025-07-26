@@ -93,7 +93,7 @@ curl "https://api.example.com/api.php/provide/vod/?ac=videolist&wd=進擊的巨�
 #### 詳情 API
 
 ```
-GET /api.php/provide/vod/?ac=detail&ids=1,2,3
+GET /api.php/provide/vod/?ac=videolist&ids=1,2,3
 ```
 
 **參數**:
@@ -106,10 +106,10 @@ GET /api.php/provide/vod/?ac=detail&ids=1,2,3
 
 ```bash
 # 單個詳情
-curl "https://api.example.com/api.php/provide/vod/?ac=detail&ids=1"
+curl "https://api.example.com/api.php/provide/vod/?ac=videolist&ids=1"
 
 # 多個詳情
-curl "https://api.example.com/api.php/provide/vod/?ac=detail&ids=1,2,3"
+curl "https://api.example.com/api.php/provide/vod/?ac=videolist&ids=1,2,3"
 ```
 
 ### 擴展功能端點

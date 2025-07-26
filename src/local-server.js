@@ -135,7 +135,7 @@ server.listen(PORT, HOST, () => {
   console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=videolist&pg=1&limit=20`);
   console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=videolist&t=1`);
   console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=videolist&wd=巨人`);
-  console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=detail&ids=49401,46442,44473`);
+  console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=videolist&ids=49401,46442,44473`);
   console.log('');
   console.log('🔧 擴展功能端點:');
   console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/categories`);

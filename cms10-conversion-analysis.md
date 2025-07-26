@@ -86,7 +86,7 @@
 
 ### 2.2 CMS10 詳情 API 格式
 
-**端點**: `/api.php/provide/vod/?ac=detail`
+**端點**: `/api.php/provide/vod/?ac=videolist`
 
 ```json
 {

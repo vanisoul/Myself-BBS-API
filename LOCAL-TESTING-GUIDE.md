@@ -110,10 +110,10 @@ curl "http://localhost:3000/api.php/provide/vod/?ac=videolist&t=1&pg=1&limit=5"
 
 ```bash
 # 單個詳情
-curl "http://localhost:3000/api.php/provide/vod/?ac=detail&ids=1"
+curl "http://localhost:3000/api.php/provide/vod/?ac=videolist&ids=1"
 
 # 多個詳情
-curl "http://localhost:3000/api.php/provide/vod/?ac=detail&ids=1,2,3"
+curl "http://localhost:3000/api.php/provide/vod/?ac=videolist&ids=1,2,3"
 ```
 
 ### 擴展功能端點
@@ -161,7 +161,7 @@ curl "http://localhost:3000/api.php/provide/vod/health"
 
 ### 詳情回應額外欄位
 
-詳情查詢 (`ac=detail`) 會包含額外欄位：
+詳情查詢 (`ac=videolist`) 會包含額外欄位：
 
 ```json
 {
@@ -188,7 +188,7 @@ curl "http://localhost:3000/api.php/provide/vod/"
 curl "http://localhost:3000/api.php/provide/vod/?ac=invalid"
 
 # detail 操作缺少 ids
-curl "http://localhost:3000/api.php/provide/vod/?ac=detail"
+curl "http://localhost:3000/api.php/provide/vod/?ac=videolist"
 
 # 無效的頁碼
 curl "http://localhost:3000/api.php/provide/vod/?ac=videolist&pg=0"
@@ -235,7 +235,7 @@ fetch("http://localhost:3000/api.php/provide/vod/?ac=videolist&limit=5")
   .then((data) => console.log(data));
 
 // 測試 CMS10 詳情 API
-fetch("http://localhost:3000/api.php/provide/vod/?ac=detail&ids=1")
+fetch("http://localhost:3000/api.php/provide/vod/?ac=videolist&ids=1")
   .then((response) => response.json())
   .then((data) => console.log(data));
 ```
