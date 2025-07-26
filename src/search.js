@@ -1,5 +1,5 @@
 import Fuse from "fuse.js";
-import { getAiringList, getCompletedList } from "./list";
+import { getAiringList, getCompletedList } from "./list.js";
 
 async function search(query) {
     const list = [...(await getAiringList()).data, ...(await getCompletedList()).data];

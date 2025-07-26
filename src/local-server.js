@@ -127,7 +127,7 @@ server.listen(PORT, HOST, () => {
   console.log('🔗 原有 API 端點:');
   console.log(`   GET  http://${HOST}:${PORT}/list/airing`);
   console.log(`   GET  http://${HOST}:${PORT}/list/completed`);
-  console.log(`   GET  http://${HOST}:${PORT}/anime/1`);
+  console.log(`   GET  http://${HOST}:${PORT}/anime/46442`);
   console.log(`   GET  http://${HOST}:${PORT}/search/進擊的巨人`);
   console.log('');
   console.log('🆕 CMS10 API 端點:');
@@ -135,7 +135,7 @@ server.listen(PORT, HOST, () => {
   console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=list&pg=1&limit=20`);
   console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=list&t=1`);
   console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=list&wd=巨人`);
-  console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=detail&ids=1,2,3`);
+  console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/?ac=detail&ids=49401,46442,44473`);
   console.log('');
   console.log('🔧 擴展功能端點:');
   console.log(`   GET  http://${HOST}:${PORT}/api.php/provide/vod/categories`);

@@ -1,4 +1,4 @@
-import { BASE, CACHE_CONTROL } from "./constants";
+import { BASE, CACHE_CONTROL } from "./constants.js";
 
 const anime = {};
 

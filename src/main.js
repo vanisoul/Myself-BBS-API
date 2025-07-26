@@ -1,9 +1,9 @@
 import { Router } from "itty-router";
-import { getAnime, getM3U8 } from "./anime";
-import { BASE } from "./constants";
-import { getAiringList, getCompletedList } from "./list";
-import { response } from "./response";
-import { search } from "./search";
+import { getAnime, getM3U8 } from "./anime.js";
+import { BASE } from "./constants.js";
+import { getAiringList, getCompletedList } from "./list.js";
+import { response } from "./response.js";
+import { search } from "./search.js";
 import { integrateCms10Routes } from "./cms10/routes.js";
 
 const router = Router();

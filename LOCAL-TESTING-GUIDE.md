@@ -76,7 +76,7 @@ curl "http://localhost:3000/list/airing"
 curl "http://localhost:3000/list/completed"
 
 # 動畫詳情
-curl "http://localhost:3000/anime/1"
+curl "http://localhost:3000/anime/52369"
 
 # 搜尋功能
 curl "http://localhost:3000/search/進擊的巨人"

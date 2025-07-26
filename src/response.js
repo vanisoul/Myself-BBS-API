@@ -1,4 +1,4 @@
-import { CACHE_CONTROL } from "./constants";
+import { CACHE_CONTROL } from "./constants.js";
 
 function response({ data = "", status = 200, headers = {} }) {
     let header = new Headers();

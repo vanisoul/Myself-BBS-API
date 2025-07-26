@@ -1,4 +1,4 @@
-import { BASE, CACHE_CONTROL } from "./constants";
+import { BASE, CACHE_CONTROL } from "./constants.js";
 
 let airing = null;
 let completed = null;
